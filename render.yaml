@@ -1,0 +1,33 @@
+# render.yaml
+# Deployment configuration for Render
+#
+# Your bot runs as a simple Python service.
+# Although GitHub Actions is your scheduler, this Render service
+#   - hosts the bot environment
+#   - allows manual triggering
+#   - provides secret storage
+#
+# IMPORTANT:
+# If you ever want Render to run scheduled jobs instead of GitHub Actions,
+# you can convert this to a 'cron job' service. For now, it stays as a web service.
+
+services:
+  - name: reddit-tech-to-x-bot
+    type: web
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python bot.py"
+    envVars:
+      PYTHON_VERSION: "3.11"
+      X_API_KEY: "${X_API_KEY}"
+      X_API_SECRET: "${X_API_SECRET}"
+      X_ACCESS_TOKEN: "${X_ACCESS_TOKEN}"
+      X_ACCESS_SECRET: "${X_ACCESS_SECRET}"
+      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
+      TELEGRAM_ADMIN_CHAT_ID: "${TELEGRAM_ADMIN_CHAT_ID}"
+
+# NOTE:
+# Render automatically injects the envVars from its dashboard.
+# The placeholders above are symbolic — do NOT substitute directly here.
+# Add secrets via Render UI → Environment → Environment Variables.
