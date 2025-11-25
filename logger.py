@@ -1,4 +1,4 @@
- """
+"""
 logger.py
 
 A simple, clean, structured JSON logger used across the bot.
@@ -41,3 +41,4 @@ def log_json(level: str, component: str, event: str, details: Dict[str, Any] = N
 # -------------------------------------------------------------
 if __name__ == "__main__":
     log_json("info", component="logger", event="test", details={"hello": "world"})
+
