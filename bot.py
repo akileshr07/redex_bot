@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 bot.py — Orchestrator
 
@@ -161,16 +162,22 @@ class Bot:
             if self._is_scheduled_now(sub.post_time):
                 tasks.append(self._process_subreddit(key, sub))
 
+        # SAFER VERSION (your request)
         if not tasks:
             log_json("info", component="bot", event="no_subreddits_scheduled")
+
+            # ALWAYS close sessions
+            await self.twitter.close()
+            await self.notifier.close()
             return
 
-        await asyncio.gather(*tasks)
+        try:
+            await asyncio.gather(*tasks)
+        finally:
+            await self.twitter.close()
+            await self.notifier.close()
 
         log_json("info", component="bot", event="run_complete")
-
-        await self.twitter.close()
-        await self.notifier.close()
 
 
 # -------------------------------------------------------------
@@ -179,4 +186,3 @@ class Bot:
 if __name__ == "__main__":
     bot = Bot()
     asyncio.run(bot.run())
-
