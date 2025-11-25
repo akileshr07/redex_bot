@@ -1,0 +1,25 @@
+# requirements.txt
+# Dependencies for reddit-tech-to-x-bot
+
+# --- Core async & HTTP ---
+aiohttp==3.9.5
+requests==2.32.3
+requests-oauthlib==2.0.0
+urllib3==2.2.2
+
+# --- Image processing ---
+Pillow==10.3.0
+
+# --- Environment & Utils ---
+python-dotenv==1.0.1
+
+# --- Formatting / Parsing ---
+aiofiles==24.1.0
+
+# --- Testing ---
+pytest==8.2.2
+
+# Note:
+# - Gunicorn is not required for Render since our service runs a simple python bot.
+#   If you want to expose a small HTTP endpoint later, uncomment:
+#   # gunicorn==22.0.0
